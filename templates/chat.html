@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>한글 맞춤법 검사 채팅</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        #chat {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            background-color: #f7f7f7;
+            overflow-y: auto;
+            height: 400px;
+        }
+
+        p {
+            margin: 5px 0;
+            word-wrap: break-word;
+        }
+
+        #chat-form {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 10px;
+            border-top: 1px solid #ccc;
+            display: flex;
+        }
+
+        #input_text {
+            flex-grow: 1;
+            padding: 5px;
+        }
+
+        #chat-form input[type="submit"] {
+            padding: 5px 10px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        #chat-form input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>한글 맞춤법 검사 채팅</h1>
+    <div id="chat">
+        {% for message in chat_history %}
+            {% if "사용자:" in message %}
+                <p style="color: blue;">{{ message }}</p>
+            {% elif "교정된 입력:" in message %}
+                <p style="color: green;">{{ message }}</p>
+            {% else %}
+                <p>{{ message }}</p>
+            {% endif %}
+        {% endfor %}
+    </div>
+    <form id="chat-form" action="/" method="post">
+        <input type="text" name="input_text" id="input_text" placeholder="한글 문장을 입력하세요...">
+        <input type="submit" value="전송">
+    </form>
+    <script>
+        document.getElementById('input_text').focus();
+
+        // Add this script to keep the chat scrolled to the bottom
+        var chatDiv = document.getElementById('chat');
+        chatDiv.scrollTop = chatDiv.scrollHeight;
+    </script>
+</body>
+</html>
